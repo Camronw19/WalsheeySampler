@@ -18,7 +18,9 @@ WalsheeySamplerAudioProcessorEditor::WalsheeySamplerAudioProcessorEditor (Walshe
     addAndMakeVisible(mLoadButton); 
 
     addAndMakeVisible(mKeyboard); 
+    addAndMakeVisible(mSampleButtonWindow); 
 
+    setResizable(true, true); 
     setSize (800, 600);
     startTimer(400); 
 }
@@ -38,7 +40,7 @@ void WalsheeySamplerAudioProcessorEditor::resized()
     auto bounds = getLocalBounds(); 
     mLoadButton.setBounds(bounds.removeFromTop(getHeight() / 4)); 
 
-    mKeyboard.setBounds(bounds.removeFromBottom(getHeight() / 2)); 
+    mSampleButtonWindow.setBounds(bounds.removeFromBottom(getHeight() / 2)); 
 }
 
 void WalsheeySamplerAudioProcessorEditor::onLoadButtonClicked()
