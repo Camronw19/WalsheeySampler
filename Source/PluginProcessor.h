@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SampleAudioSource.h"
 
 //==============================================================================
 /**
@@ -55,8 +56,12 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-
+    //==============================================================================
+    void loadSamplerSound(); 
+    juce::MidiKeyboardState& getKeyboardState(); 
 private:
+    juce::MidiKeyboardState mKeyboardState; 
+    SampleAudioSource mSampleAudioSource; 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WalsheeySamplerAudioProcessor)
 };

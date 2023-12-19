@@ -11,11 +11,16 @@
 
 //==============================================================================
 WalsheeySamplerAudioProcessorEditor::WalsheeySamplerAudioProcessorEditor (WalsheeySamplerAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), mKeyboard(p.getKeyboardState(), juce::MidiKeyboardComponent::horizontalKeyboard)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    mLoadButton.setButtonText("Load"); 
+    mLoadButton.onClick = [&] { onLoadButtonClicked(); };
+    addAndMakeVisible(mLoadButton); 
+
+    addAndMakeVisible(mKeyboard); 
+
+    setSize (800, 600);
+    startTimer(400); 
 }
 
 WalsheeySamplerAudioProcessorEditor::~WalsheeySamplerAudioProcessorEditor()
@@ -25,16 +30,24 @@ WalsheeySamplerAudioProcessorEditor::~WalsheeySamplerAudioProcessorEditor()
 //==============================================================================
 void WalsheeySamplerAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void WalsheeySamplerAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    auto bounds = getLocalBounds(); 
+    mLoadButton.setBounds(bounds.removeFromTop(getHeight() / 4)); 
+
+    mKeyboard.setBounds(bounds.removeFromBottom(getHeight() / 2)); 
+}
+
+void WalsheeySamplerAudioProcessorEditor::onLoadButtonClicked()
+{
+    audioProcessor.loadSamplerSound();
+}
+
+void WalsheeySamplerAudioProcessorEditor::timerCallback()
+{
+    mKeyboard.grabKeyboardFocus(); 
+    stopTimer(); 
 }
