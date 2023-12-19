@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="DzODbP" name="WalsheeySampler" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginWantsMidiIn">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginWantsMidiIn"
+              displaySplashScreen="1">
   <MAINGROUP id="zuAaC2" name="WalsheeySampler">
     <GROUP id="{A6C26384-C02D-7C3A-538B-BC13A582C96B}" name="Source">
       <FILE id="MdshBa" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -16,6 +17,13 @@
           file="Source/SampleAudioSource.cpp"/>
     <FILE id="fUo1Ds" name="SampleAudioSource.h" compile="0" resource="0"
           file="Source/SampleAudioSource.h"/>
+    <FILE id="e6ea4I" name="SampleButton.cpp" compile="1" resource="0"
+          file="Source/SampleButton.cpp"/>
+    <FILE id="FHjsry" name="SampleButton.h" compile="0" resource="0" file="Source/SampleButton.h"/>
+    <FILE id="mH93Gr" name="SampleButtonWindow.cpp" compile="1" resource="0"
+          file="Source/SampleButtonWindow.cpp"/>
+    <FILE id="peujei" name="SampleButtonWindow.h" compile="0" resource="0"
+          file="Source/SampleButtonWindow.h"/>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
