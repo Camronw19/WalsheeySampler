@@ -16,10 +16,22 @@ AudioEditor::AudioEditor()
 {
     addAndMakeVisible(mAudioDisplay); 
 
+    //Zoom sliders
     mVerticalZoom.addListener(this); 
     mVerticalZoom.setSliderStyle(juce::Slider::LinearBarVertical); 
+    mVerticalZoom.setValue(0.0, juce::dontSendNotification);
     addAndMakeVisible(mVerticalZoom); 
 
+    mHorisontalZoom.addListener(this);
+    mHorisontalZoom.setSliderStyle(juce::Slider::LinearBarVertical);
+    mHorisontalZoom.setValue(0., juce::dontSendNotification);
+    addAndMakeVisible(mHorisontalZoom);
+
+    //Scroll sliders
+    mHorisontalScroll.addListener(this); 
+    mHorisontalScroll.setSliderStyle(juce::Slider::LinearBar); 
+    mHorisontalScroll.setValue(0.0, juce::dontSendNotification); 
+    addAndMakeVisible(mHorisontalScroll); 
 
     //Show channel toggle buttons
     std::pair<bool, bool> showChannel = mAudioDisplay.getShowChannels(); 
@@ -47,6 +59,8 @@ void AudioEditor::resized()
     auto bounds = getLocalBounds(); 
     mAudioDisplay.setBounds(bounds.reduced(50)); 
     mVerticalZoom.setBounds(bounds.removeFromRight(20)); 
+    mHorisontalZoom.setBounds(bounds.removeFromRight(20)); 
+    mHorisontalScroll.setBounds(bounds.removeFromBottom(20)); 
     
     auto toggleBounds = bounds.removeFromLeft(50); 
     mChan1Toggle.setBounds(toggleBounds.removeFromTop(toggleBounds.getHeight() / 2)); 
@@ -66,6 +80,19 @@ void AudioEditor::sliderValueChanged(juce::Slider* slider)
         float sliderValue = static_cast<float>(mVerticalZoom.getValue());
         float normalizedSliderValue = juce::jmap(sliderValue, static_cast<float>(mVerticalZoom.getMaximum()), static_cast<float>(mVerticalZoom.getMinimum()), 1.0f, 0.1f);
         mAudioDisplay.setVerticalZoom(normalizedSliderValue);
+    }
+    else if (slider == &mHorisontalZoom)
+    {
+        float sliderValue = static_cast<float>(mHorisontalZoom.getValue());
+        float normalizedSliderValue = juce::jmap(sliderValue, static_cast<float>(mHorisontalZoom.getMaximum()), static_cast<float>(mHorisontalZoom.getMinimum()), .97f, 0.0f);
+        mAudioDisplay.setHorisontalZoom(normalizedSliderValue);
+    }
+    else if (slider == &mHorisontalScroll)
+    {
+        float sliderValue = static_cast<float>(mHorisontalScroll.getValue());
+        float normalizedSliderValue = juce::jmap(sliderValue, static_cast<float>(mHorisontalScroll.getMaximum()), static_cast<float>(mHorisontalScroll.getMinimum()), 1.0f, 0.0f);
+        mAudioDisplay.setHorisontalScroll(normalizedSliderValue);
+        DBG(normalizedSliderValue); 
     }
 }
 

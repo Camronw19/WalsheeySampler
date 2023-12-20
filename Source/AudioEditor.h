@@ -34,6 +34,8 @@ public:
 private:
     AudioDisplay mAudioDisplay; 
     juce::Slider mVerticalZoom; 
+    juce::Slider mHorisontalZoom; 
+    juce::Slider mHorisontalScroll; 
     juce::ToggleButton mChan1Toggle;
     juce::ToggleButton mChan2Toggle;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioEditor)

@@ -13,7 +13,7 @@
 
 //==============================================================================
 AudioDisplay::AudioDisplay()
-    : mThumbnailCache(5), mVerticalZoom(1.0f), mShowChan1(true), mShowChan2(true), 
+    : mThumbnailCache(5), mVerticalZoom(1.0f), mHorisontalZoom(0), mHorisontalScroll(0), mShowChan1(true), mShowChan2(true), 
     mThumbnail(512, mFormatManager, mThumbnailCache)
 {
     mFormatManager.registerBasicFormats();
@@ -50,17 +50,20 @@ void AudioDisplay::paintIfFileLoaded(juce::Graphics& g, juce::Rectangle<int>& th
 
     g.setColour(juce::Colours::aliceblue);
 
+    double startTime = mThumbnail.getTotalLength() * mHorisontalScroll; 
+    double endTime = startTime + (mThumbnail.getTotalLength() * (1 - mHorisontalZoom)); 
+
     if (mShowChan1 && !mShowChan2)
     {
-        mThumbnail.drawChannel(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(),0, mVerticalZoom);
+        mThumbnail.drawChannel(g, thumbnailBounds, startTime, endTime,0, mVerticalZoom);
     }
     else if (!mShowChan1 && mShowChan2)
     {
-        mThumbnail.drawChannel(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), 1, mVerticalZoom);
+        mThumbnail.drawChannel(g, thumbnailBounds, startTime, endTime, 1, mVerticalZoom);
     }
     else
     {
-        mThumbnail.drawChannels(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), mVerticalZoom);
+        mThumbnail.drawChannels(g, thumbnailBounds, startTime, endTime, mVerticalZoom);
     }
 }
 
@@ -88,6 +91,19 @@ void AudioDisplay::setVerticalZoom(float vZoom)
     mVerticalZoom = vZoom; 
     repaint(); 
 }
+
+void AudioDisplay::setHorisontalZoom(float hZoom)
+{
+    mHorisontalZoom = hZoom; 
+    repaint(); 
+}
+
+void AudioDisplay::setHorisontalScroll(float hScroll)
+{
+    mHorisontalScroll = hScroll; 
+    repaint(); 
+}
+
 
 void AudioDisplay::setShowChannels(bool chan1, bool chan2)
 {
