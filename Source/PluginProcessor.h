@@ -57,7 +57,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     //==============================================================================
-    void loadSamplerSound(); 
+ 
+    void loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate);
+
     juce::MidiKeyboardState& getKeyboardState(); 
 private:
     juce::MidiKeyboardState mKeyboardState; 

@@ -169,9 +169,9 @@ void WalsheeySamplerAudioProcessor::setStateInformation (const void* data, int s
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void WalsheeySamplerAudioProcessor::loadSamplerSound()
+void WalsheeySamplerAudioProcessor::loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
 {
-    mSampleAudioSource.LoadSamplerSound(); 
+    mSampleAudioSource.LoadSamplerSoundDragAndDrop(path,buttonToUpdate);
 }
 
 juce::MidiKeyboardState&  WalsheeySamplerAudioProcessor::getKeyboardState()

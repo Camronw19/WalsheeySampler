@@ -50,25 +50,18 @@ void SampleAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo& bu
     mSampler.renderNextBlock(*bufferToFill.buffer, midiMessages, bufferToFill.startSample, bufferToFill.numSamples);
 }
 
-void SampleAudioSource::LoadSamplerSound()
+void SampleAudioSource::LoadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
 {
-    mFileChooser = std::make_unique<juce::FileChooser>("Select a file to load", juce::File{}, "*.wav");
+    auto file = juce::File(path);
+    buttonToUpdate.file = file;
+    buttonToUpdate.setFileName(file.getFileName());
+    buttonToUpdate.repaint();
 
-    auto chooserFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
-    mFileChooser->launchAsync(chooserFlags, [this](const juce::FileChooser& fc)
-        {
-            juce::File file = fc.getResult();
+    std::unique_ptr<juce::AudioFormatReader> reader(mFormatManager.createReaderFor(file));
 
-            if (file != juce::File{})
-            {
-                std::unique_ptr<juce::AudioFormatReader> reader(mFormatManager.createReaderFor(file));
-
-                if (reader != nullptr)
-                {
-                    juce::BigInteger midiRange;
-                    midiRange.setRange(0, 128, true);
-                    mSampler.addSound(new juce::SamplerSound(file.getFileNameWithoutExtension(), *reader, midiRange, 60, 0.1, 0.1, 10));
-                }
-            }
-        });
+    DBG(buttonToUpdate.getMidiNote());
+    //add sound to Synthesiser mSampler
+    juce::BigInteger range;
+    range.setRange(buttonToUpdate.getMidiNote(),1, true);
+    mSampler.addSound(new juce::SamplerSound("Sample", *reader, range, buttonToUpdate.getMidiNote(), 0.1, 0.1, 10.0));
 }

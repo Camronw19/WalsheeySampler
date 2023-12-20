@@ -65,14 +65,14 @@ void SampleButtonWindow::resized()
 
 void SampleButtonWindow::initializeButtons()
 {
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(60, "C1", 0));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(61, "C#1", 1));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(62, "D1", 2));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(63, "D#1", 3));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(64, "E1", 4));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(65, "E#1", 5));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(66, "F1", 6));
-    mSampleButtons.emplace_back(std::make_unique<SampleButton>(67, "F#1", 7));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(36 , "C1", 0));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(37, "C#1", 1));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(38, "D1", 2));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(39, "D#1", 3));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(40, "E1", 4));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(41, "E#1", 5));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(42, "F1", 6));
+    mSampleButtons.emplace_back(std::make_unique<SampleButton>(43, "F#1", 7));
 }
 
 void SampleButtonWindow::buttonClicked(juce::Button* button)

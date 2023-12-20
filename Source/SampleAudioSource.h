@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SampleButton.h"
 
 //==============================================================================
 /*
@@ -25,7 +26,7 @@ public:
     void releaseResources() override; 
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override; 
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill, juce::MidiBuffer& midiMessages); 
-    void LoadSamplerSound();
+    void LoadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate);
 private:
     juce::Synthesiser mSampler;
     juce::AudioFormatManager mFormatManager;

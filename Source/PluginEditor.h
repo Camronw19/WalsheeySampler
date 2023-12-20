@@ -11,11 +11,12 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "SampleButtonWindow.h"
+#include "SampleButton.h"
 
 //==============================================================================
 /**
 */
-class WalsheeySamplerAudioProcessorEditor  : public juce::AudioProcessorEditor, juce::Timer
+class WalsheeySamplerAudioProcessorEditor  : public juce::AudioProcessorEditor, juce::Timer, public juce::FileDragAndDropTarget
 {
 public:
     WalsheeySamplerAudioProcessorEditor (WalsheeySamplerAudioProcessor&);
@@ -25,13 +26,17 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void timerCallback() override; 
+
+    bool isInterestedInFileDrag(const juce::StringArray& files) override;
+    void filesDropped(const juce::StringArray& files, int x, int y) override;
+
 private:
-    juce::TextButton mLoadButton; 
-    void onLoadButtonClicked(); 
+   
 
     juce::MidiKeyboardComponent mKeyboard; 
-    SampleButtonWindow mSampleButtonWindow; 
     WalsheeySamplerAudioProcessor& audioProcessor;
+
+    SampleButtonWindow mSampleButtonWindow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WalsheeySamplerAudioProcessorEditor)
 };
