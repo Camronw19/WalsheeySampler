@@ -92,3 +92,13 @@ void SampleButtonWindow::setListener(std::weak_ptr<AudioEditor> listener)
 {
     mEditorListener = listener; 
 }
+
+const std::vector<std::unique_ptr<SampleButton>>& SampleButtonWindow::getSampleButtons() const
+{
+    return mSampleButtons;
+}
+
+const int SampleButtonWindow::getNumButtons() const
+{
+    return mSampleButtons.size();
+}

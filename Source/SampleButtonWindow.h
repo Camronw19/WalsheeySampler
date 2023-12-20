@@ -32,6 +32,8 @@ public:
     void initializeButtons(); 
     void buttonClicked(juce::Button* button) override; 
     void setListener(std::weak_ptr<AudioEditor> listener); 
+    const std::vector<std::unique_ptr<SampleButton>>& getSampleButtons() const;
+    const int getNumButtons() const;
 private:
     std::vector<std::unique_ptr<SampleButton>> mSampleButtons;
     std::weak_ptr<AudioEditor> mEditorListener; 
