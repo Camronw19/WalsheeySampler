@@ -13,7 +13,7 @@
 
 //==============================================================================
 AudioDisplay::AudioDisplay()
-    : mThumbnailCache(5), mVerticalZoom(1.0f),
+    : mThumbnailCache(5), mVerticalZoom(1.0f), mShowChan1(true), mShowChan2(true), 
     mThumbnail(512, mFormatManager, mThumbnailCache)
 {
     mFormatManager.registerBasicFormats();
@@ -35,7 +35,7 @@ void AudioDisplay::paint (juce::Graphics& g)
         paintIfFileLoaded(g, thumbnailBounds);
 }
 
-void AudioDisplay::paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
+void AudioDisplay::paintIfNoFileLoaded(juce::Graphics& g,  juce::Rectangle<int>& thumbnailBounds)
 {
     g.setColour(juce::Colours::darkgrey);
     g.fillRect(thumbnailBounds);
@@ -43,13 +43,25 @@ void AudioDisplay::paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<
     g.drawFittedText("No File Loaded", thumbnailBounds, juce::Justification::centred, 1);
 }
 
-void AudioDisplay::paintIfFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
+void AudioDisplay::paintIfFileLoaded(juce::Graphics& g, juce::Rectangle<int>& thumbnailBounds)
 {
     g.setColour(juce::Colours::black);
     g.fillRect(thumbnailBounds);
 
     g.setColour(juce::Colours::aliceblue);
-    mThumbnail.drawChannels(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), mVerticalZoom);
+
+    if (mShowChan1 && !mShowChan2)
+    {
+        mThumbnail.drawChannel(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(),0, mVerticalZoom);
+    }
+    else if (!mShowChan1 && mShowChan2)
+    {
+        mThumbnail.drawChannel(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), 1, mVerticalZoom);
+    }
+    else
+    {
+        mThumbnail.drawChannels(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), mVerticalZoom);
+    }
 }
 
 void AudioDisplay::changeListenerCallback(juce::ChangeBroadcaster* source)
@@ -77,6 +89,17 @@ void AudioDisplay::setVerticalZoom(float vZoom)
     repaint(); 
 }
 
+void AudioDisplay::setShowChannels(bool chan1, bool chan2)
+{
+    mShowChan1 = chan1; 
+    mShowChan2 = chan2; 
+    repaint(); 
+}
+
+std::pair<bool, bool> AudioDisplay::getShowChannels()
+{
+    return std::pair<bool, bool>(mShowChan1, mShowChan2); 
+}
 
 void AudioDisplay::resized()
 {

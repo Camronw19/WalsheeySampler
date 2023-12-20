@@ -23,14 +23,16 @@ public:
     ~AudioDisplay() override;
 
     void paint (juce::Graphics&) override;
-    void paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
-    void paintIfFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
+    void paintIfNoFileLoaded(juce::Graphics& g, juce::Rectangle<int>& thumbnailBounds);
+    void paintIfFileLoaded(juce::Graphics& g, juce::Rectangle<int>& thumbnailBounds);
 
     void resized() override;
     void changeListenerCallback(juce::ChangeBroadcaster* source) override;
     void setThumbnailSource(const juce::File& inputSource);
     void thumbnailChanged();
     void setVerticalZoom(float vZoom);
+    void setShowChannels(bool chan1, bool chan2); 
+    std::pair<bool, bool> getShowChannels();
 
 private:
     juce::AudioFormatManager mFormatManager;
@@ -38,5 +40,8 @@ private:
     juce::AudioThumbnail mThumbnail;
 
     double mVerticalZoom; 
+    bool mShowChan1;
+    bool mShowChan2;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioDisplay)
 };

@@ -19,6 +19,17 @@ AudioEditor::AudioEditor()
     mVerticalZoom.addListener(this); 
     mVerticalZoom.setSliderStyle(juce::Slider::LinearBarVertical); 
     addAndMakeVisible(mVerticalZoom); 
+
+
+    //Show channel toggle buttons
+    std::pair<bool, bool> showChannel = mAudioDisplay.getShowChannels(); 
+    addAndMakeVisible(mChan1Toggle);
+    mChan1Toggle.addListener(this); 
+    mChan1Toggle.setToggleState(showChannel.first, juce::NotificationType::dontSendNotification);
+
+    addAndMakeVisible(mChan2Toggle);
+    mChan2Toggle.addListener(this);
+    mChan2Toggle.setToggleState(showChannel.second, juce::NotificationType::dontSendNotification);
 }
 
 AudioEditor::~AudioEditor()
@@ -36,6 +47,10 @@ void AudioEditor::resized()
     auto bounds = getLocalBounds(); 
     mAudioDisplay.setBounds(bounds.reduced(50)); 
     mVerticalZoom.setBounds(bounds.removeFromRight(20)); 
+    
+    auto toggleBounds = bounds.removeFromLeft(50); 
+    mChan1Toggle.setBounds(toggleBounds.removeFromTop(toggleBounds.getHeight() / 2)); 
+    mChan2Toggle.setBounds(toggleBounds); 
 }
 
 
@@ -51,5 +66,31 @@ void AudioEditor::sliderValueChanged(juce::Slider* slider)
         float sliderValue = static_cast<float>(mVerticalZoom.getValue());
         float normalizedSliderValue = juce::jmap(sliderValue, static_cast<float>(mVerticalZoom.getMaximum()), static_cast<float>(mVerticalZoom.getMinimum()), 1.0f, 0.1f);
         mAudioDisplay.setVerticalZoom(normalizedSliderValue);
+    }
+}
+
+void AudioEditor::buttonClicked(juce::Button* button)
+{
+    if (button == &mChan1Toggle || button == &mChan2Toggle)
+    {
+        if (!mChan1Toggle.getToggleState() && !mChan2Toggle.getToggleState())
+        {
+            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::WarningIcon,
+                "Alert",
+                "At least one channel must be selected!",
+                "OK");
+
+            if (button == &mChan1Toggle)
+            {
+                mChan1Toggle.setToggleState(true, juce::dontSendNotification); 
+            }
+            else if (button == &mChan2Toggle)
+            {
+                mChan2Toggle.setToggleState(true, juce::dontSendNotification);
+
+            }
+        }
+
+        mAudioDisplay.setShowChannels(mChan1Toggle.getToggleState(), mChan2Toggle.getToggleState());
     }
 }
