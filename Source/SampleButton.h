@@ -27,6 +27,7 @@ public:
     void paint(juce::Graphics&) override;
     void resized() override;
 
+
     int getMidiNote();
     juce::String getButtonName();
     juce::String getFileName();

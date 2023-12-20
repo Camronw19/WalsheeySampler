@@ -16,7 +16,9 @@
 //==============================================================================
 /*
 */
-class SampleButtonWindow  : public juce::Component
+class SampleButtonWindow  : public juce::Component, 
+                            public juce::Button::Listener
+                           
 {
 public:
     SampleButtonWindow();
@@ -25,6 +27,7 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void initializeButtons(); 
+    void buttonClicked(juce::Button* button) override; 
 
 private:
     std::vector<std::unique_ptr<SampleButton>> mSampleButtons;

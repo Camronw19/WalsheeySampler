@@ -17,11 +17,16 @@ SampleButtonWindow::SampleButtonWindow()
     initializeButtons(); 
 
     for (auto& button : mSampleButtons)
+    {
+        button->addListener(this); 
         addAndMakeVisible(*button); 
+    }
 }
 
 SampleButtonWindow::~SampleButtonWindow()
 {
+    for (auto& button : mSampleButtons)
+        button->removeListener(this); 
 }
 
 void SampleButtonWindow::paint (juce::Graphics& g)
@@ -68,4 +73,11 @@ void SampleButtonWindow::initializeButtons()
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(65, "E#1", 5));
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(66, "F1", 6));
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(67, "F#1", 7));
+}
+
+void SampleButtonWindow::buttonClicked(juce::Button* button)
+{
+    SampleButton* sampleButton = dynamic_cast<SampleButton*>(button);
+    DBG("Button clicked"); 
+    DBG(sampleButton->getButtonName()); 
 }

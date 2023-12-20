@@ -84,3 +84,4 @@ float SampleButton::getVol() {
 int SampleButton::getIndex() {
     return mIndex;
 }
+
