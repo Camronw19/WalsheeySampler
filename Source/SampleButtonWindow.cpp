@@ -78,6 +78,17 @@ void SampleButtonWindow::initializeButtons()
 void SampleButtonWindow::buttonClicked(juce::Button* button)
 {
     SampleButton* sampleButton = dynamic_cast<SampleButton*>(button);
-    DBG("Button clicked"); 
-    DBG(sampleButton->getButtonName()); 
+    if (auto editorListener = mEditorListener.lock())
+    {
+        // The object exists: safely use editorListener as std::shared_ptr<AudioEditor>
+    }
+    else
+    {
+        // The AudioEditor object has been destroyed
+    }
+}
+
+void SampleButtonWindow::setListener(std::weak_ptr<AudioEditor> listener)
+{
+    mEditorListener = listener; 
 }
