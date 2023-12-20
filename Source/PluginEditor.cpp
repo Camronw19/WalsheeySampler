@@ -11,19 +11,18 @@
 
 //==============================================================================
 WalsheeySamplerAudioProcessorEditor::WalsheeySamplerAudioProcessorEditor (WalsheeySamplerAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), mKeyboard(p.getKeyboardState(), juce::MidiKeyboardComponent::horizontalKeyboard)
+    : AudioProcessorEditor (&p), audioProcessor (p)
 {
-  
+    addAndMakeVisible(*mAudioEditor); 
 
-    addAndMakeVisible(mKeyboard); 
-    addAndMakeVisible(mSampleButtonWindow); 
+    addAndMakeVisible(mSampleButtonWindow);
+    mSampleButtonWindow.setListener(std::weak_ptr<AudioEditor>(mAudioEditor)); 
 
     setResizeLimits(400, 300, 1200, 900); 
     setResizable(true, true); 
     setSize (800, 600);
-    startTimer(400); 
 
-    
+ 
 }
 
 WalsheeySamplerAudioProcessorEditor::~WalsheeySamplerAudioProcessorEditor()
@@ -40,27 +39,17 @@ void WalsheeySamplerAudioProcessorEditor::resized()
 {
     auto bounds = getLocalBounds(); 
    
-
     mSampleButtonWindow.setBounds(bounds.removeFromBottom(getHeight() / 2)); 
+    mAudioEditor->setBounds(bounds.removeFromTop(getHeight() / 2));
 }
 
-void WalsheeySamplerAudioProcessorEditor::timerCallback()
-{
-    mKeyboard.grabKeyboardFocus(); 
-    stopTimer(); 
-}
 
-//Funtion defenition for making sure file grabbed is valid format
 bool WalsheeySamplerAudioProcessorEditor::isInterestedInFileDrag(const juce::StringArray& files)
 {
     for (auto file : files)
-    {
-        if (file.contains(".wav") || file.contains(".mp3") || file.contains(".aif")) {
+        if (file.contains(".wav") || file.contains(".mp3") || file.contains(".aif"))
             return true;
-        }
-    }
    
-
     return false;
 }
 
@@ -80,23 +69,6 @@ void WalsheeySamplerAudioProcessorEditor::filesDropped(const juce::StringArray& 
                     mSampleButtonWindow.getSampleButtons()[i]->setButtonText(file);
                 }
             }
-            //lastClickedButton = mSampleButtonWindow.mSampleButtons[i];
-
-            /*
-            if (buttons[i]->isHighlighted == true) {
-                return;
-            }
-
-            //reset highlighted state
-            for (int j = 0; j < 16; j++) {
-                buttons[j]->isHighlighted = false;
-                buttons[j]->repaint();
-            }
-
-            // Set the highlight state for the clicked button
-            buttons[i]->isHighlighted = true;
-            buttons[i]->repaint();
-            */
         }
     }
 }

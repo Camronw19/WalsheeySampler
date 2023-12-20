@@ -5,6 +5,9 @@
               displaySplashScreen="1">
   <MAINGROUP id="zuAaC2" name="WalsheeySampler">
     <GROUP id="{A6C26384-C02D-7C3A-538B-BC13A582C96B}" name="Source">
+      <FILE id="AZA0cp" name="AudioDisplay.cpp" compile="1" resource="0"
+            file="Source/AudioDisplay.cpp"/>
+      <FILE id="DweKwM" name="AudioDisplay.h" compile="0" resource="0" file="Source/AudioDisplay.h"/>
       <FILE id="iVmA8U" name="AudioEditor.cpp" compile="1" resource="0" file="Source/AudioEditor.cpp"/>
       <FILE id="fCYgww" name="AudioEditor.h" compile="0" resource="0" file="Source/AudioEditor.h"/>
       <FILE id="wqBlPC" name="SampleAudioSource.cpp" compile="1" resource="0"

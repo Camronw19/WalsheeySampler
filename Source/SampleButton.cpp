@@ -14,13 +14,13 @@
 
 //==============================================================================
 SampleButton::SampleButton()
-    :mMidiNote(0), mButtonName(""), mIndex(-1), mFileName(""), mVol(0.0)
+    :mMidiNote(0), mButtonName(""), mIndex(-1), mFileName(""), mVol(0.0), mIsHighlighted(false)
 {
  
 }
 
 SampleButton::SampleButton(int note, juce::String name, int i)
-    :mMidiNote(note), mButtonName(name), mIndex(i), mFileName(""), mVol(0.0)
+    :mMidiNote(note), mButtonName(name), mIndex(i), mFileName(""), mVol(0.0), mIsHighlighted(false)
 {
 
 }
@@ -32,7 +32,7 @@ SampleButton::~SampleButton()
 void SampleButton::paint(juce::Graphics& g)
 {
     //Fill backgound
-    if (isHighlighted)
+    if (mIsHighlighted)
         g.setColour(juce::Colour::fromRGB(112, 112, 112));
     else
         g.setColour(juce::Colour::fromRGB(47, 43, 41));
@@ -55,6 +55,16 @@ void SampleButton::paint(juce::Graphics& g)
 void SampleButton::resized()
 {
 
+}
+
+void SampleButton::setFile(const juce::File& file)
+{
+    mFile = file; 
+}
+
+juce::File SampleButton::getFile()
+{
+    return mFile; 
 }
 
 int SampleButton::getMidiNote() {
@@ -84,4 +94,5 @@ float SampleButton::getVol() {
 int SampleButton::getIndex() {
     return mIndex;
 }
+
 

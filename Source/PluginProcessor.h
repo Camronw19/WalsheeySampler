@@ -59,10 +59,7 @@ public:
     //==============================================================================
  
     void loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate);
-
-    juce::MidiKeyboardState& getKeyboardState(); 
-private:
-    juce::MidiKeyboardState mKeyboardState; 
+private: 
     SampleAudioSource mSampleAudioSource; 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WalsheeySamplerAudioProcessor)

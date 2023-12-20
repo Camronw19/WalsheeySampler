@@ -14,7 +14,7 @@
 //==============================================================================
 AudioEditor::AudioEditor()
 {
-
+    addAndMakeVisible(mAudioDisplay); 
 }
 
 AudioEditor::~AudioEditor()
@@ -23,14 +23,19 @@ AudioEditor::~AudioEditor()
 
 void AudioEditor::paint (juce::Graphics& g)
 {
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));  
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   
-
+    
 }
+
+
 
 void AudioEditor::resized()
 {
+    auto bounds = getLocalBounds(); 
+    mAudioDisplay.setBounds(bounds.reduced(50)); 
+}
 
+
+void AudioEditor::setThumbnailSource(const juce::File& inputSource)
+{
+    mAudioDisplay.setThumbnailSource(inputSource); 
 }

@@ -19,8 +19,7 @@ WalsheeySamplerAudioProcessor::WalsheeySamplerAudioProcessor()
 #endif
         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-    ),
-    mSampleAudioSource(mKeyboardState)
+    )
     
 #endif
 {
@@ -172,11 +171,6 @@ void WalsheeySamplerAudioProcessor::setStateInformation (const void* data, int s
 void WalsheeySamplerAudioProcessor::loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
 {
     mSampleAudioSource.LoadSamplerSoundDragAndDrop(path,buttonToUpdate);
-}
-
-juce::MidiKeyboardState&  WalsheeySamplerAudioProcessor::getKeyboardState()
-{
-    return mKeyboardState; 
 }
 
 

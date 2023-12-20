@@ -81,6 +81,7 @@ void SampleButtonWindow::buttonClicked(juce::Button* button)
     if (auto editorListener = mEditorListener.lock())
     {
         // The object exists: safely use editorListener as std::shared_ptr<AudioEditor>
+        editorListener->setThumbnailSource(sampleButton->getFile()); 
     }
     else
     {

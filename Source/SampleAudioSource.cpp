@@ -12,8 +12,7 @@
 #include "SampleAudioSource.h"
 
 //==============================================================================
-SampleAudioSource::SampleAudioSource(juce::MidiKeyboardState& keyboardState)
-    :mKeyboardState(keyboardState)
+SampleAudioSource::SampleAudioSource()
 {
     mFormatManager.registerBasicFormats();
     mSampler.addVoice(new juce::SamplerVoice());
@@ -41,19 +40,13 @@ void SampleAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo& bu
 void SampleAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill, juce::MidiBuffer& midiMessages)
 {
     bufferToFill.clearActiveBufferRegion();
-
-    // Add keyboard component midi messages to external midi messages
-    juce::MidiBuffer keyboardMidi;
-    mKeyboardState.processNextMidiBuffer(keyboardMidi, 0, bufferToFill.buffer->getNumSamples(), true);
-    midiMessages.addEvents(keyboardMidi, 0, bufferToFill.buffer->getNumSamples(), 0);
-
     mSampler.renderNextBlock(*bufferToFill.buffer, midiMessages, bufferToFill.startSample, bufferToFill.numSamples);
 }
 
 void SampleAudioSource::LoadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
 {
     auto file = juce::File(path);
-    buttonToUpdate.file = file;
+    buttonToUpdate.setFile(file);
     buttonToUpdate.setFileName(file.getFileName());
     buttonToUpdate.repaint();
 

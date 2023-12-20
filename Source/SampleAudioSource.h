@@ -19,7 +19,7 @@
 class SampleAudioSource  : public juce::AudioSource
 {
 public:
-    SampleAudioSource(juce::MidiKeyboardState& keyboardState);
+    SampleAudioSource();
     ~SampleAudioSource() override;
 
     void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override; 
@@ -31,6 +31,5 @@ private:
     juce::Synthesiser mSampler;
     juce::AudioFormatManager mFormatManager;
     std::unique_ptr<juce::FileChooser> mFileChooser;
-    juce::MidiKeyboardState& mKeyboardState; 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleAudioSource)
 };
