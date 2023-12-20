@@ -14,20 +14,15 @@
 
 //==============================================================================
 SampleButton::SampleButton()
+    :mMidiNote(0), mButtonName(""), mIndex(-1), mFileName(""), mVol(0.0)
 {
-    midiNote = 0;
-    buttonName = "";
-    fileName = "";
-    vol = 0.0;
+ 
 }
 
-SampleButton::SampleButton(int note, juce::String name, int ind)
+SampleButton::SampleButton(int note, juce::String name, int i)
+    :mMidiNote(note), mButtonName(name), mIndex(i), mFileName(""), mVol(0.0)
 {
-    midiNote = note;
-    buttonName = name;
-    index = ind;
-    fileName = "";
-    vol = 0.0;
+
 }
 
 SampleButton::~SampleButton()
@@ -36,71 +31,56 @@ SampleButton::~SampleButton()
 
 void SampleButton::paint(juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    //Fill backgound
+    if (isHighlighted)
+        g.setColour(juce::Colour::fromRGB(112, 112, 112));
+    else
+        g.setColour(juce::Colour::fromRGB(47, 43, 41));
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    g.fillRoundedRectangle(getLocalBounds().toFloat(), 10);
 
-    g.fillAll(juce::Colour::fromRGB(47, 43, 41));
-
+    //Draw outline
     g.setColour(juce::Colours::grey);
-    g.drawRect(getLocalBounds(), 1);   // draw an outline around the component
+    g.drawRoundedRectangle(getLocalBounds().toFloat(), 10, 1); 
 
+    //Draw key
     g.setColour(juce::Colours::lightsteelblue);
     g.setFont(10.0f);
-    //Paint C1-C2
-    g.drawText(buttonName, getLocalBounds(), juce::Justification::topLeft, true);
-    //Paint FileNames When Loaded
-    g.drawText(fileName, getLocalBounds(), juce::Justification::centred, true);
+    g.drawText(mButtonName, getLocalBounds().reduced(10), juce::Justification::topLeft, true);
 
-    if (isHighlighted)
-    {
-        g.fillAll(juce::Colour::fromRGB(112, 112, 112));
-
-        g.setColour(juce::Colours::grey);
-        g.drawRect(getLocalBounds(), 1);   // draw an outline around the component
-
-        g.setColour(juce::Colours::lightsteelblue);
-        g.setFont(10.0f);
-        //Paint C1-C2
-        g.drawText(buttonName, getLocalBounds(), juce::Justification::topLeft, true);
-        //Paint FileNames When Loaded
-        g.drawText(fileName, getLocalBounds(), juce::Justification::centred, true);
-    }
+    //Draw file name
+    g.drawText(mFileName, getLocalBounds(), juce::Justification::centred, true);
 }
 
 void SampleButton::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+
 }
 
 int SampleButton::getMidiNote() {
-    return midiNote;
+    return mMidiNote;
 }
 
 juce::String SampleButton::getButtonName() {
-    return buttonName;
+    return mButtonName;
 }
 
 void SampleButton::setFileName(juce::String name) {
-    fileName = name;
+    mFileName = name;
 }
 
 juce::String SampleButton::getFileName() {
-    return fileName;
+    return mFileName;
 }
 
 void SampleButton::setVol(float x) {
-    vol = x;
+    mVol = x;
 }
 
 float SampleButton::getVol() {
-    return vol;
+    return mVol;
 }
 
 int SampleButton::getIndex() {
-    return index;
+    return mIndex;
 }

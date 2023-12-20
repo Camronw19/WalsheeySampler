@@ -20,6 +20,7 @@ WalsheeySamplerAudioProcessorEditor::WalsheeySamplerAudioProcessorEditor (Walshe
     addAndMakeVisible(mKeyboard); 
     addAndMakeVisible(mSampleButtonWindow); 
 
+    setResizeLimits(400, 300, 1200, 900); 
     setResizable(true, true); 
     setSize (800, 600);
     startTimer(400); 

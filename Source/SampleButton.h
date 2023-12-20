@@ -30,23 +30,22 @@ public:
     int getMidiNote();
     juce::String getButtonName();
     juce::String getFileName();
-    void setFileName(juce::String);
-    void setVol(float);
     float getVol();
     int getIndex();
+
+    void setFileName(juce::String);
+    void setVol(float);
 
     bool isHighlighted = false;
     juce::File file;
 
-
 private:
 
-    int midiNote;
-    juce::String buttonName;
-    juce::String fileName;
-    int index;
-    float vol;
-
+    int mMidiNote;
+    juce::String mButtonName;
+    juce::String mFileName;
+    int mIndex;
+    float mVol;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SampleButton)
 };
