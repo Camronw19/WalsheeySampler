@@ -16,8 +16,8 @@
 //==============================================================================
 /*
 */
-class AudioEditor  : public juce::Component
-                     
+class AudioEditor  : public juce::Component, 
+                     public juce::Slider::Listener
 {
 public:
     AudioEditor();
@@ -27,8 +27,10 @@ public:
     void resized() override;
     
     void setThumbnailSource(const juce::File& inputSource);
+    void sliderValueChanged(juce::Slider* slider) override; 
 
 private:
     AudioDisplay mAudioDisplay; 
+    juce::Slider mVerticalZoom; 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioEditor)
 };

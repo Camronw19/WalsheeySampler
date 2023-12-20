@@ -13,7 +13,7 @@
 
 //==============================================================================
 AudioDisplay::AudioDisplay()
-    : mThumbnailCache(5),
+    : mThumbnailCache(5), mVerticalZoom(1.0f),
     mThumbnail(512, mFormatManager, mThumbnailCache)
 {
     mFormatManager.registerBasicFormats();
@@ -45,11 +45,11 @@ void AudioDisplay::paintIfNoFileLoaded(juce::Graphics& g, const juce::Rectangle<
 
 void AudioDisplay::paintIfFileLoaded(juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
 {
-    g.setColour(juce::Colours::white);
+    g.setColour(juce::Colours::black);
     g.fillRect(thumbnailBounds);
 
-    g.setColour(juce::Colours::red);
-    mThumbnail.drawChannels(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), 1.0f);
+    g.setColour(juce::Colours::aliceblue);
+    mThumbnail.drawChannels(g, thumbnailBounds, 0.0, mThumbnail.getTotalLength(), mVerticalZoom);
 }
 
 void AudioDisplay::changeListenerCallback(juce::ChangeBroadcaster* source)
@@ -69,6 +69,12 @@ void AudioDisplay::thumbnailChanged()
 void AudioDisplay::setThumbnailSource(const juce::File& inputSource)
 {
     mThumbnail.setSource(new juce::FileInputSource(inputSource));
+}
+
+void AudioDisplay::setVerticalZoom(float vZoom)
+{
+    mVerticalZoom = vZoom; 
+    repaint(); 
 }
 
 

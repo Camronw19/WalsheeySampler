@@ -30,10 +30,13 @@ public:
     void changeListenerCallback(juce::ChangeBroadcaster* source) override;
     void setThumbnailSource(const juce::File& inputSource);
     void thumbnailChanged();
+    void setVerticalZoom(float vZoom);
 
 private:
     juce::AudioFormatManager mFormatManager;
     juce::AudioThumbnailCache mThumbnailCache;
     juce::AudioThumbnail mThumbnail;
+
+    double mVerticalZoom; 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioDisplay)
 };
