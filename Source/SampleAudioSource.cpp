@@ -52,7 +52,6 @@ void SampleAudioSource::LoadSamplerSoundDragAndDrop(const juce::String& path, Sa
 
     std::unique_ptr<juce::AudioFormatReader> reader(mFormatManager.createReaderFor(file));
 
-    DBG(buttonToUpdate.getMidiNote());
     //add sound to Synthesiser mSampler
     juce::BigInteger range;
     range.setRange(buttonToUpdate.getMidiNote(),1, true);

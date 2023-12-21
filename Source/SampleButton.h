@@ -38,6 +38,8 @@ public:
     void setFileName(juce::String);
     void setVol(float);
     void setFile(const juce::File&);
+    void setHighlightedState(bool);
+    bool getHighlightedState();
 
 private:
     juce::File mFile;
@@ -46,7 +48,7 @@ private:
     juce::String mFileName;
     int mIndex;
     float mVol;
-    bool mIsHighlighted; 
+    bool mIsHighlighted = false; 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SampleButton)
 };

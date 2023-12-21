@@ -32,8 +32,10 @@ SampleButton::~SampleButton()
 void SampleButton::paint(juce::Graphics& g)
 {
     //Fill backgound
-    if (mIsHighlighted)
+    if (mIsHighlighted == true)
+    {
         g.setColour(juce::Colour::fromRGB(112, 112, 112));
+    }
     else
         g.setColour(juce::Colour::fromRGB(47, 43, 41));
 
@@ -67,32 +69,47 @@ juce::File SampleButton::getFile()
     return mFile; 
 }
 
-int SampleButton::getMidiNote() {
+int SampleButton::getMidiNote() 
+{
     return mMidiNote;
 }
 
-juce::String SampleButton::getButtonName() {
+juce::String SampleButton::getButtonName()
+{
     return mButtonName;
 }
 
-void SampleButton::setFileName(juce::String name) {
+void SampleButton::setFileName(juce::String name) 
+{
     mFileName = name;
 }
 
-juce::String SampleButton::getFileName() {
+juce::String SampleButton::getFileName()
+{
     return mFileName;
 }
 
-void SampleButton::setVol(float x) {
+void SampleButton::setVol(float x) 
+{
     mVol = x;
 }
 
-float SampleButton::getVol() {
+float SampleButton::getVol()
+{
     return mVol;
 }
 
-int SampleButton::getIndex() {
+int SampleButton::getIndex() 
+{
     return mIndex;
 }
 
+void SampleButton::setHighlightedState(bool state)
+{
+    mIsHighlighted = state;
+}
 
+bool SampleButton::getHighlightedState()
+{
+    return mIsHighlighted;
+}

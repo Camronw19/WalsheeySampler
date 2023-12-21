@@ -34,9 +34,13 @@ public:
     void setListener(std::weak_ptr<AudioEditor> listener); 
     const std::vector<std::unique_ptr<SampleButton>>& getSampleButtons() const;
     const int getNumButtons() const;
+    void setLastClickedButton(SampleButton*);
 private:
+
     std::vector<std::unique_ptr<SampleButton>> mSampleButtons;
     std::weak_ptr<AudioEditor> mEditorListener; 
+
+    SampleButton* LastClickedButton = nullptr;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleButtonWindow)
 };

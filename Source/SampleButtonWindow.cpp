@@ -73,15 +73,48 @@ void SampleButtonWindow::initializeButtons()
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(41, "E#1", 5));
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(42, "F1", 6));
     mSampleButtons.emplace_back(std::make_unique<SampleButton>(43, "F#1", 7));
+
 }
 
 void SampleButtonWindow::buttonClicked(juce::Button* button)
 {
+
     SampleButton* sampleButton = dynamic_cast<SampleButton*>(button);
+
+    if (LastClickedButton != nullptr && LastClickedButton->getHighlightedState() == true)
+    {
+        // Reset Highlighted State
+        LastClickedButton->setHighlightedState(false);
+        LastClickedButton->repaint();
+
+        // If the same button is clicked again, clear the last clicked button
+        if (LastClickedButton == sampleButton)
+        {
+            setLastClickedButton(nullptr);
+        }
+        else
+        {
+            // Set Highlighted State and repaint for a different button
+            sampleButton->setHighlightedState(true);
+            sampleButton->repaint();
+            setLastClickedButton(sampleButton);
+        }
+    }
+    else
+    {
+        // Set Highlighted State and repaint for the first click
+        sampleButton->setHighlightedState(true);
+        sampleButton->repaint();
+        setLastClickedButton(sampleButton);
+    }
+
+
     if (auto editorListener = mEditorListener.lock())
     {
         // The object exists: safely use editorListener as std::shared_ptr<AudioEditor>
+        
         editorListener->setThumbnailSource(sampleButton->getFile()); 
+       
     }
     else
     {
@@ -102,4 +135,9 @@ const std::vector<std::unique_ptr<SampleButton>>& SampleButtonWindow::getSampleB
 const int SampleButtonWindow::getNumButtons() const
 {
     return mSampleButtons.size();
+}
+
+void SampleButtonWindow::setLastClickedButton(SampleButton* button)
+{
+    LastClickedButton = button;
 }
