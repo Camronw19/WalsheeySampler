@@ -26,7 +26,7 @@ public:
     void releaseResources() override; 
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override; 
     void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill, juce::MidiBuffer& midiMessages); 
-    void LoadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate);
+    void LoadSamplerSoundDragAndDrop(const juce::File& file, int midiNote);
 private:
     juce::Synthesiser mSampler;
     juce::AudioFormatManager mFormatManager;

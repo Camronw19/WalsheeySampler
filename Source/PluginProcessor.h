@@ -58,7 +58,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     //==============================================================================
  
-    void loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate);
+    void loadSamplerSoundDragAndDrop(const juce::File& file, int midiNote);
 private: 
     SampleAudioSource mSampleAudioSource; 
     //==============================================================================

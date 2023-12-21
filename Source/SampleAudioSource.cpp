@@ -43,17 +43,12 @@ void SampleAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo& bu
     mSampler.renderNextBlock(*bufferToFill.buffer, midiMessages, bufferToFill.startSample, bufferToFill.numSamples);
 }
 
-void SampleAudioSource::LoadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
+void SampleAudioSource::LoadSamplerSoundDragAndDrop(const juce::File& file, int midiNote) 
 {
-    auto file = juce::File(path);
-    buttonToUpdate.setFile(file);
-    buttonToUpdate.setFileName(file.getFileName());
-    buttonToUpdate.repaint();
-
     std::unique_ptr<juce::AudioFormatReader> reader(mFormatManager.createReaderFor(file));
 
     //add sound to Synthesiser mSampler
     juce::BigInteger range;
-    range.setRange(buttonToUpdate.getMidiNote(),1, true);
-    mSampler.addSound(new juce::SamplerSound("Sample", *reader, range, buttonToUpdate.getMidiNote(), 0.1, 0.1, 10.0));
+    range.setRange(midiNote,1, true);
+    mSampler.addSound(new juce::SamplerSound("Sample", *reader, range, midiNote, 0.1, 0.1, 10.0));
 }

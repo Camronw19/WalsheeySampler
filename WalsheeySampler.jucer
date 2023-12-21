@@ -34,7 +34,7 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="WalsheeySampler"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="WalsheeySampler" postbuildCommand="&quot;C:\Users\camro\Documents\Development\JUCE Projects\WalsheeySampler\WalsheeySampler.filtergraph&quot;"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="WalsheeySampler"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

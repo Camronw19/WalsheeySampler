@@ -53,20 +53,30 @@ bool WalsheeySamplerAudioProcessorEditor::isInterestedInFileDrag(const juce::Str
     return false;
 }
 
-void WalsheeySamplerAudioProcessorEditor::filesDropped(const juce::StringArray& files, int x, int y)
+void WalsheeySamplerAudioProcessorEditor::filesDropped(const juce::StringArray& filePaths, int x, int y)
 {
     auto localPoint = mSampleButtonWindow.getLocalPoint(this, juce::Point<int>(x, y));
 
-    for (auto file : files)
+    for (auto filePath : filePaths)
     {
-        if (isInterestedInFileDrag(file))
+        if (isInterestedInFileDrag(filePath))
         {
             for (int i = 0; i < mSampleButtonWindow.getNumButtons(); i++)
             {
                 if (mSampleButtonWindow.getSampleButtons()[i]->getBounds().contains(localPoint))
                 {
-                    audioProcessor.loadSamplerSoundDragAndDrop(file, *mSampleButtonWindow.getSampleButtons()[i]);
-                    mSampleButtonWindow.getSampleButtons()[i]->setButtonText(file);
+                    const juce::File file(filePath); 
+
+                    //Update button 
+                    SampleButton& buttonToUpdate = *mSampleButtonWindow.getSampleButtons()[i]; 
+                    buttonToUpdate.setFile(file);
+                    buttonToUpdate.setFileName(file.getFileName());
+                    buttonToUpdate.repaint();
+                    buttonToUpdate.setButtonText(file.getFileName()); 
+
+                    //Update sampler in processor
+                    audioProcessor.loadSamplerSoundDragAndDrop(file, buttonToUpdate.getMidiNote());
+
                 }
             }
         }

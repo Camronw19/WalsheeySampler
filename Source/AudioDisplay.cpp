@@ -14,7 +14,7 @@
 //==============================================================================
 AudioDisplay::AudioDisplay()
     : mThumbnailCache(5), mVerticalZoom(1.0f), mHorisontalZoom(0), mHorisontalScroll(0), mShowChan1(true), mShowChan2(true), 
-    mThumbnail(512, mFormatManager, mThumbnailCache)
+    mThumbnail(1024, mFormatManager, mThumbnailCache)
 {
     mFormatManager.registerBasicFormats();
     mThumbnail.addChangeListener(this);
@@ -45,10 +45,10 @@ void AudioDisplay::paintIfNoFileLoaded(juce::Graphics& g,  juce::Rectangle<int>&
 
 void AudioDisplay::paintIfFileLoaded(juce::Graphics& g, juce::Rectangle<int>& thumbnailBounds)
 {
-    g.setColour(juce::Colours::black);
+    g.setColour(juce::Colour::fromRGB(240,240,240));
     g.fillRect(thumbnailBounds);
 
-    g.setColour(juce::Colours::aliceblue);
+    g.setColour(juce::Colour::fromRGB(0, 102, 204));
 
     double startTime = mThumbnail.getTotalLength() * mHorisontalScroll; 
     double endTime = startTime + (mThumbnail.getTotalLength() * (1 - mHorisontalZoom)); 

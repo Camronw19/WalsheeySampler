@@ -168,9 +168,9 @@ void WalsheeySamplerAudioProcessor::setStateInformation (const void* data, int s
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void WalsheeySamplerAudioProcessor::loadSamplerSoundDragAndDrop(const juce::String& path, SampleButton& buttonToUpdate) 
+void WalsheeySamplerAudioProcessor::loadSamplerSoundDragAndDrop(const juce::File& file, int midiNote)
 {
-    mSampleAudioSource.LoadSamplerSoundDragAndDrop(path,buttonToUpdate);
+    mSampleAudioSource.LoadSamplerSoundDragAndDrop(file, midiNote);
 }
 
 

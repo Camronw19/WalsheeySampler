@@ -20,17 +20,20 @@ AudioEditor::AudioEditor()
     mVerticalZoom.addListener(this); 
     mVerticalZoom.setSliderStyle(juce::Slider::LinearBarVertical); 
     mVerticalZoom.setValue(0.0, juce::dontSendNotification);
+    mVerticalZoom.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     addAndMakeVisible(mVerticalZoom); 
 
     mHorisontalZoom.addListener(this);
     mHorisontalZoom.setSliderStyle(juce::Slider::LinearBarVertical);
     mHorisontalZoom.setValue(0., juce::dontSendNotification);
+    mHorisontalZoom.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     addAndMakeVisible(mHorisontalZoom);
 
     //Scroll sliders
     mHorisontalScroll.addListener(this); 
     mHorisontalScroll.setSliderStyle(juce::Slider::LinearBar); 
     mHorisontalScroll.setValue(0.0, juce::dontSendNotification); 
+    mHorisontalScroll.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     addAndMakeVisible(mHorisontalScroll); 
 
     //Show channel toggle buttons
