@@ -35,6 +35,9 @@ public:
     const std::vector<std::unique_ptr<SampleButton>>& getSampleButtons() const;
     const int getNumButtons() const;
     void setLastClickedButton(SampleButton*);
+    void HighlightLastClickedButton(SampleButton*);
+    void HighlightDragAndDrop(SampleButton*);
+    void drawWaveform(SampleButton*);
 private:
 
     std::vector<std::unique_ptr<SampleButton>> mSampleButtons;

@@ -74,6 +74,9 @@ void WalsheeySamplerAudioProcessorEditor::filesDropped(const juce::StringArray& 
                     buttonToUpdate.repaint();
                     buttonToUpdate.setButtonText(file.getFileName()); 
 
+                    //Highlight Button
+                    mSampleButtonWindow.HighlightDragAndDrop(&buttonToUpdate);
+
                     //Update sampler in processor
                     audioProcessor.loadSamplerSoundDragAndDrop(file, buttonToUpdate.getMidiNote());
 

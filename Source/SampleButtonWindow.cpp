@@ -81,45 +81,10 @@ void SampleButtonWindow::buttonClicked(juce::Button* button)
 
     SampleButton* sampleButton = dynamic_cast<SampleButton*>(button);
 
-    if (LastClickedButton != nullptr && LastClickedButton->getHighlightedState() == true)
-    {
-        // Reset Highlighted State
-        LastClickedButton->setHighlightedState(false);
-        LastClickedButton->repaint();
-
-        // If the same button is clicked again, clear the last clicked button
-        if (LastClickedButton == sampleButton)
-        {
-            setLastClickedButton(nullptr);
-        }
-        else
-        {
-            // Set Highlighted State and repaint for a different button
-            sampleButton->setHighlightedState(true);
-            sampleButton->repaint();
-            setLastClickedButton(sampleButton);
-        }
-    }
-    else
-    {
-        // Set Highlighted State and repaint for the first click
-        sampleButton->setHighlightedState(true);
-        sampleButton->repaint();
-        setLastClickedButton(sampleButton);
-    }
-
-
-    if (auto editorListener = mEditorListener.lock())
-    {
-        // The object exists: safely use editorListener as std::shared_ptr<AudioEditor>
-        
-        editorListener->setThumbnailSource(sampleButton->getFile()); 
-       
-    }
-    else
-    {
-        // The AudioEditor object has been destroyed
-    }
+    HighlightLastClickedButton(sampleButton);
+    drawWaveform(sampleButton);
+    
+    
 }
 
 void SampleButtonWindow::setListener(std::weak_ptr<AudioEditor> listener)
@@ -140,4 +105,71 @@ const int SampleButtonWindow::getNumButtons() const
 void SampleButtonWindow::setLastClickedButton(SampleButton* button)
 {
     LastClickedButton = button;
+}
+
+void SampleButtonWindow::HighlightLastClickedButton(SampleButton* sampleButton)
+{
+    if (LastClickedButton != nullptr && LastClickedButton->getHighlightedState() == true)
+    {
+        // Reset Highlighted State
+        LastClickedButton->setHighlightedState(false);
+        LastClickedButton->repaint();
+
+        // If the same button is clicked again, clear the last clicked button
+        if (LastClickedButton == sampleButton)
+        {
+            setLastClickedButton(nullptr);
+            
+        }
+        else
+        {
+            // Set Highlighted State and repaint for a different button
+            sampleButton->setHighlightedState(true);
+            sampleButton->repaint();
+            setLastClickedButton(sampleButton);
+        }
+    }
+    else
+    {
+        // Set Highlighted State and repaint for the first click
+        sampleButton->setHighlightedState(true);
+        sampleButton->repaint();
+        setLastClickedButton(sampleButton);
+    }
+}
+
+void SampleButtonWindow::HighlightDragAndDrop(SampleButton* sampleButton)
+{
+    if (LastClickedButton != nullptr) 
+    {
+        LastClickedButton->setHighlightedState(false);
+        LastClickedButton->repaint();
+    }
+
+    sampleButton->setHighlightedState(true);
+    sampleButton->repaint();
+    setLastClickedButton(sampleButton);
+    drawWaveform(sampleButton);
+
+}
+
+void SampleButtonWindow::drawWaveform(SampleButton* sampleButton)
+{
+    if (auto editorListener = mEditorListener.lock())
+    {
+        // The object exists: safely use editorListener as std::shared_ptr<AudioEditor>
+        if (sampleButton->getHighlightedState() == true)
+        {
+        editorListener->setThumbnailSource(sampleButton->getFile());
+        }
+        else
+        {
+        editorListener->setThumbnailSource(juce::File());
+        }
+
+    }
+    else
+    {
+        // The AudioEditor object has been destroyed
+    }
 }
